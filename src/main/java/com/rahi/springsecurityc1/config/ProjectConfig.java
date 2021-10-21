@@ -22,7 +22,7 @@ public class ProjectConfig {
 
         var uds = new InMemoryUserDetailsManager();
         var u1 = User.withUsername("bill")
-                .password("12345")
+                .password(passwordEncoder().encode("12345"))
                 .authorities("read")
                 .build();
 
