@@ -28,6 +28,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate( Authentication authentication ) throws AuthenticationException {
+
         //Implement auth logic here
         // if request is authenticated,  return from here
         // If not authenticated, you should throw AuthException
@@ -42,10 +43,16 @@ public class CustomAuthProvider implements AuthenticationProvider {
         if (u != null) {
             if (passwordEncoder.matches(password, u.getPassword())) {
                 return new UsernamePasswordAuthenticationToken(userName, password, u.getAuthorities());
+            } else {
+                throw new BadCredentialsException("Error!");
             }
         }
 
-        throw new BadCredentialsException("Error!");
+//        Return null will make sure that if
+//         this provider can not handle other are cleared to try to authenticate
+//        Example: User with two type of username. Like: mobile num and email
+
+        return null;
     }
 
     @Override
